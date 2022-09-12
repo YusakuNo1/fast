@@ -16,7 +16,7 @@ import {
 
 const app = express();
 const port = 8080;
-const { templateRenderer } = fastSSR();
+const { templateRenderer } = fastSSR({ renderMode: 'async' });
 
 todoApp.define();
 DesignToken.withStrategy(DesignTokenEventResolutionStrategy);
@@ -53,7 +53,7 @@ const template = html`
     </html>
 `;
 
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
     const todoData = JSON.parse(fs.readFileSync("./todo-data.json").toString());
     TodoList.provide(document, new DefaultTodoList(todoData));
 
@@ -66,7 +66,7 @@ app.get("/", (req, res) => {
         { designTokenDefaultStyles: styleTarget.cssText }
     );
 
-    for (const part of stream) {
+    for await (const part of stream) {
         res.write(part);
     }
 
