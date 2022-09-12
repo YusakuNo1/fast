@@ -43,6 +43,16 @@ export class DefaultTodoList {
         if (todos) {
             this._todos = todos.map(x => reactive(x));
         }
+
+        this.addItemsAsync().then();
+    }
+
+    private async addItemsAsync() {
+        for (let i = 0; i < 10; ++i) {
+            this._todos.push({ description: `David Item ${i}`, done: i % 2 === 0 });
+            console.log('David: in TODO list async', i);
+            await new Promise((resolve) => setTimeout(resolve, 200));
+        }
     }
 
     public add(description: string) {

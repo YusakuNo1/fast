@@ -1,10 +1,20 @@
 import { FASTElement } from "@microsoft/fast-element";
+import { PendingTaskEvent } from "@microsoft/fast-element/pending-task";
 import { styles } from "./todo-app.styles.js";
 import { template } from "./todo-app.template.js";
 import { TodoList } from "./todo-list.js";
 
 export class TodoApp extends FASTElement {
     @TodoList todos!: TodoList;
+
+    async doWork() {
+        await new Promise((resolve) => setTimeout(resolve, 3000));
+    }
+
+    connectedCallback(): void {
+        super.connectedCallback();
+        this.dispatchEvent(new PendingTaskEvent(this.doWork()));
+    }
 }
 
 // By using this API instead of the @customElement
