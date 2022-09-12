@@ -10,6 +10,7 @@ export interface TodoList {
     readonly filtered: readonly Todo[];
     add(description: string): void;
     remove(todo: Todo): void;
+    addItemsAsync(): void;
 }
 
 export class DefaultTodoList {
@@ -44,10 +45,10 @@ export class DefaultTodoList {
             this._todos = todos.map(x => reactive(x));
         }
 
-        this.addItemsAsync().then();
+        // this.addItemsAsync().then();
     }
 
-    private async addItemsAsync() {
+    public async addItemsAsync() {
         for (let i = 0; i < 10; ++i) {
             this._todos.push({ description: `David Item ${i}`, done: i % 2 === 0 });
             console.log('David: in TODO list async', i);

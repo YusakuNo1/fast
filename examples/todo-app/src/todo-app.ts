@@ -8,7 +8,10 @@ export class TodoApp extends FASTElement {
     @TodoList todos!: TodoList;
 
     async doWork() {
-        await new Promise((resolve) => setTimeout(resolve, 3000));
+        console.log('doWork start', Date.now());
+        // await new Promise((resolve) => setTimeout(resolve, 3000));
+        await this.todos.addItemsAsync();
+        console.log('doWork end', Date.now());
     }
 
     connectedCallback(): void {
