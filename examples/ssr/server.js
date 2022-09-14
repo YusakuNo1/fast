@@ -14,6 +14,8 @@ import {
     DesignTokenStyleTarget,
 } from "@microsoft/fast-foundation";
 
+const experimentName = process.argv[2];
+
 const app = express();
 const port = 8080;
 const { templateRenderer } = fastSSR({ renderMode: 'async' });
@@ -53,7 +55,30 @@ const template = html`
     </html>
 `;
 
-app.get("/", async (req, res) => {
+async function streamingSimple(req, res) {
+    const arr = [];
+    for (let i = 0; i < 20; ++i) {
+        arr.push(i);
+    }
+
+    res.write('<html><body><div>');
+    res.write('Search: <input type="text" id="search-input" name="search-input" placeholder="Bing Search Query"><br>');
+
+    let counter = 0;
+    for (let i = 0; i < arr.length; ++i) {
+        const part = arr[i];
+        const content = `<div>In Div${counter++}</div><br />`;
+        res.write(content);
+        console.log('part', part);
+        await new Promise(resolve => setTimeout(resolve, 500));
+    }
+
+    res.write('</div></body></html>');
+
+    res.end();
+}
+
+async function streaming(req, res) {
     const todoData = JSON.parse(fs.readFileSync("./todo-data.json").toString());
     TodoList.provide(document, new DefaultTodoList(todoData));
 
@@ -66,12 +91,22 @@ app.get("/", async (req, res) => {
         { designTokenDefaultStyles: styleTarget.cssText }
     );
 
-    for await (const part of stream) {
-        res.write(part);
+    for (const part of stream) {
+        const content = await part;
+        res.write(content);
+        await new Promise(resolve => setImmediate(resolve));
     }
 
     res.end();
     DesignToken.unregisterDefaultStyleTarget(styleTarget);
+}
+
+app.get("/", async (req, res) => {
+    if (experimentName === 'simple') {
+        await streamingSimple(req, res);
+    } else {
+        await streaming(req, res);
+    }
 });
 
 app.listen(port, () => {

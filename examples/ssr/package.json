@@ -9,6 +9,7 @@
     "build": "webpack --mode=production",
     "watch": "tsc -p tsconfig.json --watch",
     "start": "yarn build && node server.js",
+    "start-simple": "yarn build && node server.js simple",
     "test": "yarn build"
   },
   "author": {

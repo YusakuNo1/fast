@@ -7,16 +7,9 @@ import { TodoList } from "./todo-list.js";
 export class TodoApp extends FASTElement {
     @TodoList todos!: TodoList;
 
-    async doWork() {
-        console.log('doWork start', Date.now());
-        // await new Promise((resolve) => setTimeout(resolve, 3000));
-        await this.todos.addItemsAsync();
-        console.log('doWork end', Date.now());
-    }
-
     connectedCallback(): void {
         super.connectedCallback();
-        this.dispatchEvent(new PendingTaskEvent(this.doWork()));
+        this.dispatchEvent(new PendingTaskEvent(this.todos.addItemsAsync()));
     }
 }
 
