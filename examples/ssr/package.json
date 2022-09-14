@@ -10,6 +10,7 @@
     "watch": "tsc -p tsconfig.json --watch",
     "start": "yarn build && node server.js",
     "start-simple": "yarn build && node server.js simple",
+    "start-simulate-fast": "yarn build && node server.js simulate-fast",
     "test": "yarn build"
   },
   "author": {
