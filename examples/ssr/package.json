@@ -7,10 +7,12 @@
   "private": true,
   "scripts": {
     "build": "webpack --mode=production",
+    "build-dev": "webpack --mode=development",
     "watch": "tsc -p tsconfig.json --watch",
     "start": "yarn build && node server.js",
     "start-simple": "yarn build && node server.js simple",
-    "start-simulate-fast": "yarn build && node server.js simulate-fast",
+    "start-fast-output": "yarn build && node server.js fast-output",
+    "start-fast-output-no-template": "yarn build && node server.js fast-output-no-template",
     "test": "yarn build"
   },
   "author": {
