@@ -7,7 +7,11 @@ import "./todo-form.js";
 export const template = html<TodoApp>`
     <h1>FAST Todos</h1>
 
-    <todo-form></todo-form>
+    * (Remove before PR) David's new content~~~~
+    <todo-form
+        david-boolean-attr="${x => x.davidBooleanAttr}"
+        david-string-attr="${x => x.davidStringAttr}"
+    ></todo-form>
 
     <section>
         <label for="filter">Filter:</label>
