@@ -7,7 +7,8 @@ import "./todo-form.js";
 export const template = html<TodoApp>`
     <h1>FAST Todos</h1>
 
-    <todo-form></todo-form>
+    * David's new content~~~~
+    <todo-form aria-expanded="${x => x.testField}"></todo-form>
 
     <section>
         <label for="filter">Filter:</label>

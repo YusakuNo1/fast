@@ -139,7 +139,7 @@ export abstract class AsyncFASTElementRenderer extends FASTElementRenderer
                 if (value === "" || value === undefined || value === null) {
                     yield ` ${name}`;
                 } else {
-                    yield ` ${name}="${escapeHtml(value)}"`;
+                    yield ` ${name}="${escapeValue(value)}"`;
                 }
             }
         }
@@ -181,7 +181,7 @@ function* renderAttributesSync(this: FASTElementRenderer): IterableIterator<stri
             if (value === "" || value === undefined || value === null) {
                 yield ` ${name}`;
             } else {
-                yield ` ${name}="${escapeHtml(value)}"`;
+                yield ` ${name}="${escapeValue(value)}"`;
             }
         }
     }
@@ -208,4 +208,11 @@ function* renderShadow(
             ExecutionContext.default
         );
     }
+}
+
+function escapeValue(value: any): string {
+    if (typeof value !== "boolean") {
+        value = escapeHtml(value);
+    }
+    return `${value}`;
 }

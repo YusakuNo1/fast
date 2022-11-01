@@ -5,6 +5,7 @@ import { TodoList } from "./todo-list.js";
 
 export class TodoApp extends FASTElement {
     @TodoList todos!: TodoList;
+    testField: boolean = true;
 }
 
 // By using this API instead of the @customElement
