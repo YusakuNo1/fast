@@ -7,6 +7,9 @@ import { consolidate, consolidateAsync } from "../test-utilities/consolidate.js"
 import { uniqueElementName } from "@microsoft/fast-element/testing";
 import { PendingTaskEvent } from "@microsoft/fast-element/pending-task";
 
+import { StyleRenderer } from "../styles/style-renderer.js";
+import { DefaultTemplateRenderer } from "../template-renderer/template-renderer.js";
+
 @customElement({
     name: "bare-element",
 })
@@ -36,5 +39,13 @@ test.describe("SyncFASTElementRenderer", () => {
     test("should render custome elements with valid attributes",  () => {
         // class MyElement extends FASTElement {}
         // expect(SyncFASTElementRenderer.matchesClass(MyElement, "", new Map())).toBe(true);
+        class MockRender extends SyncFASTElementRenderer {
+            protected templateRenderer: DefaultTemplateRenderer = {} as any;
+
+            protected styleRenderer: StyleRenderer = {} as any;
+
+        }
+
+        expect(0).toBe(1);
     });
 });
